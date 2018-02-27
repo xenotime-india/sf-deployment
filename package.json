@@ -1,0 +1,59 @@
+{
+  "name": "myapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "config": "^1.29.4",
+    "cors": "^2.8.4",
+    "crypto-js": "^3.1.9-1",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "helmet": "^3.11.0",
+    "jsforce": "^1.8.1",
+    "jsonwebtoken": "^8.1.1",
+    "knex": "^0.14.4",
+    "pg": "^7.4.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-inlinesvg": "^0.7.5",
+    "react-lightning-design-system": "^2.5.7",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "redis": "^2.8.0",
+    "redux": "^3.7.2",
+    "redux-form": "^7.2.3",
+    "redux-thunk": "^2.2.0",
+    "request": "^2.83.0",
+    "urlencode": "^1.1.0",
+    "winston": "^2.4.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "./node_modules/.bin/prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "lint-staged": "^4.0.2",
+    "nodemon": "^1.15.1",
+    "prettier": "^1.5.3"
+  },
+  "scripts": {
+    "build": "react-scripts build && babel server -d dist",
+    "start": "node dist/index.js",
+    "heroku-postbuild": "./node_modules/.bin/react-scripts build",
+    "precommit": "lint-staged",
+    "develop:api": "./node_modules/.bin/nodemon -e js,graphql --exec \"yarn install && babel-node\" --inspect=0.0.0.0:5858 --nolazy server/index.js",
+    "develop:client": "REACT_APP_REDUX_DEBUGGING_ENABLED=true ./node_modules/.bin/react-scripts start",
+    "prettify:api": "find ./api/**/*.js | xargs ./node_modules/.bin/prettier --write --single-quote",
+    "prettify:client": "find ./src/**/*.js | xargs ./node_modules/.bin/prettier --write --single-quote",
+    "build-css": "node-sass --include-path scss ./public/assets/styles/index.scss public/assets/styles/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  }
+}
