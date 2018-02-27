@@ -8,7 +8,6 @@ import cors from 'cors';
 
 import { login, whoami, logout, signature, callback } from './auth';
 
-
 export default (app) => {
     app.use(helmet());
     app.use(bodyParser.urlencoded({ extended: false }));

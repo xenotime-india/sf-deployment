@@ -12,5 +12,6 @@ module.exports = {
     REDIS_URL: process.env.REDIS_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_USER_SESSIONS_DB: process.env.REDIS_USER_SESSIONS_DB,
-    JWT_SECRET: process.env.JWT_SECRET
+    JWT_SECRET: process.env.JWT_SECRET,
+    WEB_CLIENT_ROOT: process.env.WEB_CLIENT_ROOT,
 }

@@ -3,8 +3,9 @@ import jsforce from "jsforce";
 import { errorResponse } from './services/error';
 import knexService from './services/knex';
 import jwtService from './services/jwt';
-import { userSessions } from './services/redis';
+import userSessions from './services/redis';
 import signatureService from './services/signature';
+import winston from 'winston';
 
 const oauth2 = new jsforce.OAuth2({
     loginUrl : config.sfloginUrl,
@@ -36,20 +37,22 @@ export const callback = (req, res) => {
     const conn = new jsforce.Connection({oauth2: oauth2});
     const code = req.query.code;
     conn.authorize(code, function(err, userInfo) {
-        if (err) { return console.error("This error is in the auth callback: " + err); }
+        if (err) { return winston.error("This error is in the auth callback: " + err); }
 
-        console.log('Access Token: ' + conn.accessToken);
-        console.log('Instance URL: ' + conn.instanceUrl);
-        console.log('refreshToken: ' + conn.refreshToken);
-        console.log('User ID: ' + userInfo.id);
-        console.log('Org ID: ' + userInfo.organizationId);
+        winston.info('Access Token: ' + conn.accessToken);
+        winston.info('Instance URL: ' + conn.instanceUrl);
+        winston.info('refreshToken: ' + conn.refreshToken);
+        winston.info('User ID: ' + userInfo.id);
+        winston.info('Org ID: ' + userInfo.organizationId);
 
-        req.session.accessToken = conn.accessToken;
-        req.session.instanceUrl = conn.instanceUrl;
-        req.session.refreshToken = conn.refreshToken;
-
-        var string = encodeURIComponent('true');
-        res.redirect('http://localhost:8000/?valid=' + string);
+        let jwt = jwtService.sign(userInfo, '2h');
+        userSessions
+            .setAsync(jwt, 'true')
+            .then(() => {
+                // Pass the JWT to the webclient for processing
+                return res.redirect(`${config.WEB_CLIENT_ROOT}?token=${jwt}`);
+            })
+            .catch(errorResponse(res));
     });
 };
 
