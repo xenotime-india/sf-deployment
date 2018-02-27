@@ -14,15 +14,18 @@ const startServer = async () => {
     const app = api(express());
 
     app.use(express.static('build'));
-    /*
+
     app.get('*', function(req, res, next) {
-        if (serverRoutes.indexOf(req.url) < 0) {
+        const filerRoutes = serverRoutes.filter((serverRoute) => {
+            return serverRoute.startsWith(req.url)
+        })
+        if (filerRoutes.length == 0) {
             return res
                 .set('Content-Type', 'text/html')
                 .sendFile(__dirname + '/build/index.html');
         }
         return next();
-    });*/
+    });
 
     app.listen(port, err => {
         if (err) throw err;
