@@ -13,10 +13,9 @@ export class Routes extends React.Component {
 					<PrivateRoute path = '/about' component = {About} />
 					<Route render = { () => {
 						return <p>You're lost.  This is how new Router Switch is suppose to work!</p>
-					}} />		
+					}} />
 				</Switch>
 			</Router>
-
 			)
 	}
 }	

@@ -3,6 +3,7 @@ import express from 'express';
 import config from 'config';
 import winston from 'winston';
 import api from './lib';
+import { createServer } from 'http';
 
 winston.level = config.WINSTON_LEVEL || 'debug';
 const dev = config.NODE_ENV !== 'production';
@@ -27,7 +28,8 @@ const startServer = async () => {
         return next();
     });
 
-    app.listen(port, err => {
+    let server = createServer(app);
+    server.listen(port, err => {
         if (err) throw err;
         winston.info(`> Ready on http://localhost:${port}`);
     });

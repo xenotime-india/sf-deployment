@@ -12,6 +12,7 @@ import { GlobalNav } from './components/GlobalNav/GlobalNav'
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
 const token = localStorage.getItem('token')
+console.log(token);
 
 const title = "Minimilistic React-webpack-3-boilerplate [2017]"
 export default class App extends React.Component {

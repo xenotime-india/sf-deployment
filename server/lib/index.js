@@ -5,10 +5,11 @@ import bodyParser from 'body-parser';
 import config from 'config';
 import helmet from 'helmet';
 import cors from 'cors';
-
 import { login, whoami, logout, signature, callback } from './auth';
+import nocache from "nocache";
 
 export default (app) => {
+    app.use(nocache());
     app.use(helmet());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());

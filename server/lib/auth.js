@@ -25,6 +25,7 @@ const getSession = (request, response) => {
 
 export const login = (req, res) => {
     // Redirect to Salesforce login/authorization page
+    winston.log('innnnnn')
     res.redirect(oauth2.getAuthorizationUrl({scope: 'id refresh_token'}));
 };
 
