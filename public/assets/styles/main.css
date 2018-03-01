@@ -73,5 +73,11 @@ h1 {
     height: 100%;
     z-index: 9999; }
 
+html, body {
+  height: 100%;
+}
+
 body {
-  flex: 1; }
+  flex: 1;
+  background: rgb(244, 246, 249);
+}
